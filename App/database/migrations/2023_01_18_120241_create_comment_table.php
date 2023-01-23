@@ -20,7 +20,7 @@ return new class extends Migration
         $table->foreign('user_id')->references('id')->on('users');
 
 		$table->unsignedBigInteger('blog_id');
-		$table->foreign('blog_id')->references('id')->on('blog');
+		$table->foreign('blog_id')->references('id')->on('blog')->onDelete('cascade');
 
 		$table->integer('likes',0);
 		$table->string('comment',255);

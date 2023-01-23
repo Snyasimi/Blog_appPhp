@@ -1,8 +1,7 @@
 @extends('layout.layout')
 @section('content')
 		<main>
-			<H1>Blogger</H1>
-				<hr>
+			
 			<div><img src="#" width="150px"></div>
 				<hr>
 
@@ -13,13 +12,37 @@
 				
 				<br>
 
-				<table>
+				<table cellpadding="15px">
 					<tr>
 						<th>Blogs</th>
+                        
 					</tr>
+                    @foreach( $user->blogs as $blog)
 					<tr>
-					<td>{{ $blogs }}</td>
+                    <td>{{ $loop->iteration }}</td>
+					<td>{{ $blog->blog_title }}</td>
+                    <td>{{ $blog->likes }}</td>
+
+
+                    @can('delete',$blog)
+                    <td>
+						<form action ="{{ route('blog.destroy',$blog->id) }}" method="POST">
+							@csrf
+							@method('DELETE')
+							<input type="submit" value="DELETE"/>
+						</form>
+					</td>
+				    <td>
+						<form action ="{{ route('blog.edit',$blog->id) }}" method="GET">
+							
+							<input type="submit" value="EDIT"/>
+						</form>
+					
+					</td>
+
+                    @endcan
 					</tr>
+                    @endforeach
 			</section>
 
                 	<article>

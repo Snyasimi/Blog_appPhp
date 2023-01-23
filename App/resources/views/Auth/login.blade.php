@@ -3,25 +3,26 @@
 @section('content')
 	<main>
 
-		<H1><header>Blogger</header></H1>
+		
 
 		<hr>
 
 		<form action="{{ route('login')}}" method="POST" cellpadding="50px">
    			@csrf
 			<table>
+        
                 <tr>
                     <th>Login</th>
                 </tr>
-
+            
 
 				<tr>
 					<td><label for="Email">Email Address</label></td>
-					<td><input type="text" name="email" required /></td>
+					<td><input type="text" name="email" required  value="{{ old('email') }}"/></td>
 				</tr>
 				<tr>
 					<td><label for="password">Password</label></td>
-					<td><input type="password" required name="password"></td>
+					<td><input type="password" required name="password"  ></td>
 				</tr>
 				
 				<tr>

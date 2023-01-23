@@ -36,7 +36,7 @@ Route::get('/logout',[LoginController::class,'logout'])->name('logout');
 Route::resource('profile',ProfileController::class);
 Route::resource('/blog',BlogController::class);
 Route::middleware(['auth'])->group(function(){
-      Route::resource('comments',CommentController::class)->only('update');
-      Route::resource('/blog',BlogController::class)->only('create','edit','destroy');
+      Route::resource('comments',CommentController::class)->only('update','destroy');
+      Route::resource('/blog',BlogController::class)->only('create','edit','destroy','update');
    });
 

@@ -2,7 +2,7 @@
 @section('content')
 	<main>
 
-		<H1><header>Blogger</header></H1>
+		
 
 		<hr>
 
@@ -15,12 +15,12 @@
                 </tr>
 				<tr>
 					<td><label for="name">Name</label></td>
-					<td><input type="text" required name ="name" /></td>
+					<td><input type="text" required name ="name" value="{{ old('name') }}"/></td>
 				</tr>
 
 				<tr>
 					<td><label for="Email">Email Address</label></td>
-					<td><input type="text" name="email" required /></td>
+					<td><input type="text" name="email" required value="{{ old('email') }}"/></td>
 				</tr>
 				<tr>
 					<td><label for="password1">Password</label></td>

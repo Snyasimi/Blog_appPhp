@@ -71,9 +71,17 @@ class CommentController extends Controller
     public function update(Request $request, $id)
     {
         $blog = Blog::findorfail($id);
+        $likes = $blog->likes;
 	    $comment = new Comments;
 
 	    $comment->user_id=auth()->user()->id;
+
+        //updating the likes of the blog if user has liked
+        if ($request->input('like_radio')){
+            $blog->likes = $likes + 1;
+        }
+
+
 	    $comment->likes = 1;
 	    $comment->comment =$request->comment;
 
@@ -90,6 +98,11 @@ class CommentController extends Controller
      */
     public function destroy($id)
     {
-        //
+        
+        $comment = Comments::findorfail($id);
+        $blog_id = $comment->blog_id;
+        $comment->delete();
+        return back();
+
     }
 }
