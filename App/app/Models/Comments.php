@@ -11,6 +11,8 @@ class Comments extends Model
     use HasFactory;
     protected $table = "comment";
 
+    
+
 
     public function blog()
     {
@@ -20,5 +22,13 @@ class Comments extends Model
     {
         return $this->BelongsTo(User::class);
     }
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+    public function reply(){
+        return $this->hasMany(Comments::class,'ParentComment');
+    }
 
+    public function ParentComment(){
+
+        return $this->belongsTo(Comments::class);
+    }
 }

@@ -74,7 +74,7 @@ class CommentController extends Controller
         $likes = $blog->likes;
 	    $comment = new Comments;
 
-	    $comment->user_id=auth()->user()->id;
+	    $comment->user_id = auth()->user()->id;
 
         //updating the likes of the blog if user has liked
         if ($request->input('like_radio')){
@@ -104,5 +104,31 @@ class CommentController extends Controller
         $comment->delete();
         return back();
 
+    }
+    public function reply(Request $request,$id){
+        $comment = Comments::findorfail($id);
+
+        $reply = new Comments;
+        $reply->user_id = $request->user()->id;
+        $reply->blog_id = $comment->blog_id;
+        //$reply->ParentComment = $comment->id;
+        $reply->likes = 0;
+        $reply->comment = $request->input('reply');
+        $comment->reply()->save($reply);
+        return back();
+
+    }
+    
+    public function replyreply(Request $request,$id){
+        $comment = Comments::findorfail($id);
+
+        $reply = new Comments;
+        $reply->user_id = $request->user()->id;
+        $reply->blog_id = $comment->blog_id;
+        //$reply->ParentComment = $comment->id;
+        $reply->likes = 0;
+        $reply->comment = $request->input('reply');
+        $comment->reply()->save($reply);
+        return back();
     }
 }

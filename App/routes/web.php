@@ -35,8 +35,10 @@ Route::get('/logout',[LoginController::class,'logout'])->name('logout');
 //PROTECTED ROUTES
 Route::resource('profile',ProfileController::class);
 Route::resource('/blog',BlogController::class);
+Route::post('comments/{id}',[CommentController::class,'reply'])->name('commentreply');
+//Route::post('comments/{id}',[CommentController::class,'replyreply'])->name('replyreply');
 Route::middleware(['auth'])->group(function(){
-      Route::resource('comments',CommentController::class)->only('update','destroy');
+      Route::resource('comments',CommentController::class)->only('update','destroy','reply');
       Route::resource('/blog',BlogController::class)->only('create','edit','destroy','update');
    });
 

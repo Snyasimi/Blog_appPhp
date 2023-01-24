@@ -69,9 +69,13 @@ class BlogController extends Controller
     { 
         
         $blog = Blog::findorfail($id);
-        $comments = Blog::findorfail($id)->comment;
+        $comments = $blog->comment->whereNull('ParentComment');
+        $replies = $blog->comment->whereNotNull('ParentComment');
+        
 
-            return view('Blog.show',['blog'=>$blog,'comments'=>$comments]);
+            return view('Blog.show',[
+                'blog'=>$blog,'comments'=>$comments,
+                "replies"=>$replies]);
         
     }
 

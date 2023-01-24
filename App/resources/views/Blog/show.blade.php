@@ -15,7 +15,7 @@
 
 
 			@if($comments)
-			<table  cellpadding="15px">
+			<table  cellpadding="15px" border="1px">
 				<tr>
 					<th>Comments</th>
 					<th>likes</th>
@@ -24,9 +24,62 @@
 				<tr>
 					<td>
 						<u><a href="{{ route('profile.show',$comment->user->id)}}">{{ $comment->user->name }}</a></u><br>
-						{{ $comment->comment }}<br>
+						{{ $comment->comment }}<br><br>
+						
+
+						{{--REPLY TO THE PARENT --}}
+						<form action="{{ route('commentreply',$comment->id )}}" method="POST">
+							@csrf
+							<textarea name="reply" placeholder="reply to this comment"></textarea>
+							<button type="submit"><b>Reply</b></button>
+						</form>
+						
+						{{-- REPLIES ARE INSERTED HERE ---}}
+						@if($comment->reply)
+						
+
+							@foreach($comment->reply as $reply)
+
+							    <u>{{$reply->user->name}}</u><br>
+
+								<small><p>{{$reply->comment}}</p></small><br>
+
+									{{--REPLY TO THE CHILDREN COMMENTS--}}
+									<form action="{{ route('commentreply',$reply->id )}}" method="POST">
+										@csrf
+										<textarea name="reply" placeholder="reply to {{$reply->user->name}}'s reply"></textarea>
+										<button type="submit">Reply</button>
+									</form>
+
+								@foreach($replies as $rp)
+									@if($rp->ParentComment == $reply->id)
+										<small><u>{{$rp->user->name}}</u><br></small>
+										<small>{{ $rp->comment }}</small><br>
+
+									<form action="{{ route('commentreply',$rp->id )}}" method="POST">
+												@csrf
+										<textarea name="reply" placeholder="reply to {{$rp->user->name}}'s reply"></textarea>
+										<button type="submit">Reply</button>
+									</form>
+
+									@endif
+								@endforeach
+
+									
+								
+
+
+							@endforeach
+						@endif
+						{{-- ENDS HERE --}}
+
+
 					</td>
 					<td>{{ $comment->likes }}</td>
+					<td>
+						
+
+					</td>
 
 
 					@can('delete',$comment)
@@ -40,7 +93,7 @@
 							</form>
 						
 						</td>
-						
+
 					@endcan
 
 

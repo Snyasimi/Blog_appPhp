@@ -22,6 +22,9 @@ return new class extends Migration
 		$table->unsignedBigInteger('blog_id');
 		$table->foreign('blog_id')->references('id')->on('blog')->onDelete('cascade');
 
+            $table->unsignedBigInteger('ParentComment')->nullable();
+            $table->foreign('ParentComment')->references('id')->on('comment')->onDelete('cascade');
+
 		$table->integer('likes',0);
 		$table->string('comment',255);
 
